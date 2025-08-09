@@ -13,21 +13,28 @@ import envConfig from './config/env.config.js';
 dotenv.config();
 
 const app = express();
-const PORT = envConfig.PORT;
+const PORT = process.env.PORT || envConfig.PORT || 5000;
 const server = createServer(app);
 
 export const io = connectToSocket(server, {                                      
     cors: {
         methods: ["POST", "GET"],
-        origin: ["https://pingme-sigma.vercel.app/"]
-
+        origin: [
+            envConfig.FRONTEND || "http://localhost:5173",
+            "https://pingme-sigma.vercel.app",
+            "https://pingme-sigma.vercel.app/"
+        ]
     }
 });
 
 app.use(bodyParser.json());
 app.use(express.urlencoded({extended: true}));
 app.use(cors({
-    origin: "https://pingme-sigma.vercel.app/",
+    origin: [
+        envConfig.FRONTEND || "http://localhost:5173",
+        "https://pingme-sigma.vercel.app",
+        "https://pingme-sigma.vercel.app/"
+    ],
     credentials: true,
     methods: ["GET", "POST", "PUT", "DELETE"],
     allowedHeaders: ["Content-Type", "Authorization"]
@@ -39,9 +46,13 @@ app.use("/api/v1", router);
  
 
 app.get('/', (req, res) => {
-    res.send("Hi")
+    res.json({ 
+        message: "PingMe API is running successfully!",
+        version: "2.0.0",
+        status: "active"
+    });
 })
 
 server.listen(PORT, () => {
-    console.log(`Server running on ${PORT}`)
+    console.log(`Server running on port ${PORT}`)
 })

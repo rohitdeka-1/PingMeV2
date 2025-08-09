@@ -1,9 +1,14 @@
 {
   "name": "backend",
   "version": "1.0.0",
-  "main": "index.js",
+  "main": "server.js",
   "type": "module",
+  "engines": {
+    "node": ">=16.0.0",
+    "npm": ">=8.0.0"
+  },
   "scripts": {
+    "build": "echo 'No build step required'",
     "start": "node server.js",
     "dev": "nodemon server.js",
     "prod": "pm2 server.js"
