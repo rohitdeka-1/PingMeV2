@@ -8,7 +8,7 @@ import { createServer } from "node:http";
 import { connectToSocket } from "./socket/socket.js"
 import router from "./routes/index.js"
 import envConfig from './config/env.config.js';
-import userModel from './models/user.model.js';
+ 
 
 dotenv.config();
 
@@ -19,7 +19,7 @@ const server = createServer(app);
 export const io = connectToSocket(server, {                                      
     cors: {
         methods: ["POST", "GET"],
-        origin: ["http://localhost:5173"]
+        origin: ["https://pingme-sigma.vercel.app/"]
 
     }
 });
@@ -27,7 +27,7 @@ export const io = connectToSocket(server, {
 app.use(bodyParser.json());
 app.use(express.urlencoded({extended: true}));
 app.use(cors({
-    origin: "http://localhost:5173",
+    origin: "https://pingme-sigma.vercel.app/",
     credentials: true,
     methods: ["GET", "POST", "PUT", "DELETE"],
     allowedHeaders: ["Content-Type", "Authorization"]
